@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { StrapiAuthService } from '../../core/services/strapi-auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-
+  public auth:StrapiAuthService = inject(StrapiAuthService);
 }

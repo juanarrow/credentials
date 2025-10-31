@@ -109,6 +109,19 @@
       >
         Acceder
       </button>
+      <span>
+        <p>
+          ¿No tienes cuenta?
+        </p>
+        <a [routerLink]="['/register']" [state]="{navigateTo: navigateTo}">Regístrate</a>
+      </span>
+      @if(error()){
+        <span class="text-red-500 font-medium text-sm">
+          <p>
+            Email o contraseña invalidos
+          </p>
+        </span>
+      }
     </form>
   </div>
 </div>

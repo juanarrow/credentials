@@ -1,30 +1,46 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../core/services/auth.service';
+import { LocalStorageAuthService } from '../../core/services/local-storate-auth.service';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
+  error;
   formLogin;
+  private router:Router = inject(Router);
+  readonly navigateTo:string = "";
+  
   //Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]
   constructor(private formSvc:FormBuilder,
-    private auth:AuthService
+    private auth:LocalStorageAuthService
   ){
     this.formLogin = this.formSvc.group({
       'email':['', [Validators.required, Validators.email]],
       'password':['', [Validators.required]],
     });
+    this.error = signal(false);
+    this.navigateTo = this.router.getCurrentNavigation()?.extras.state?.['navigateTo'] || '/dashboard';
+
   }
 
-  onSubmit(){
+  async onSubmit(){
     console.log(this.formLogin.value);
-    this.auth.login(this.formLogin.value as any);
+    try{
+      this.error.set(false);
+      const response = await this.auth.login(this.formLogin.value as any);
+      this.router.navigate([this.navigateTo]);
+    }
+    catch(error){
+      this.error.set(true);
+    }
+    
   }
 
   getError(control:string){
