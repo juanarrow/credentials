@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, effect, untracked } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LocalStorageAuthService } from '../../core/services/local-storate-auth.service';
+import { StrapiAuthService } from '../../core/services/strapi-auth.service';
+import { User } from '../../core/models/user';
 
 
 
@@ -26,11 +27,10 @@ function paswordMatches(control:AbstractControl):ValidationErrors | null{
 export class RegisterComponent {
   formRegister:FormGroup;
   builder:FormBuilder = inject(FormBuilder);
-  auth:LocalStorageAuthService = inject(LocalStorageAuthService);
+  auth:StrapiAuthService = inject(StrapiAuthService);
   router:Router = inject(Router);
-  navigateTo:string = "";
+  readonly navigateTo:string;
 
-  error;
   constructor(){
     this.formRegister = this.builder.group({
       'name':['',[Validators.required, Validators.minLength(3)]],
@@ -39,18 +39,17 @@ export class RegisterComponent {
       'password':['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]],
       'confirmPassword':['', [Validators.required]]
     },{validators:[paswordMatches]});
-    this.navigateTo = this.router.getCurrentNavigation()?.extras.state?.['navigateTo']||'dashboard';
-    this.error = signal(false);
+    this.navigateTo = history.state?.['navigateTo'] || '/dashboard';
+    effect(() => {
+      const user = this.auth.user();
+      if (user) {
+        this.router.navigate([this.navigateTo]);
+      }
+    });
   }
 
-  async onSubmit(){
-    try{
-      await this.auth.register(this.formRegister.value);
-      this.router.navigate([this.navigateTo]);
-    }
-    catch(error){
-
-    }
+  onSubmit(){
+    this.auth.register(this.formRegister.value);
   }
 
    getError(control:string){

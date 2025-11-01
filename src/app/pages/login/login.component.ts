@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, effect, untracked } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocalStorageAuthService } from '../../core/services/local-storate-auth.service';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { StrapiAuthService } from '../../core/services/strapi-auth.service';
+import { User } from '../../core/models/user';
 
 @Component({
   selector: 'app-login',
@@ -12,35 +14,28 @@ import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent {
 
-  error;
   formLogin;
   private router:Router = inject(Router);
-  readonly navigateTo:string = "";
-  
-  //Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/)]
+  readonly navigateTo:string;
+
   constructor(private formSvc:FormBuilder,
-    private auth:LocalStorageAuthService
+    private auth:StrapiAuthService
   ){
     this.formLogin = this.formSvc.group({
       'email':['', [Validators.required, Validators.email]],
       'password':['', [Validators.required]],
     });
-    this.error = signal(false);
-    this.navigateTo = this.router.getCurrentNavigation()?.extras.state?.['navigateTo'] || '/dashboard';
-
+    this.navigateTo = history.state?.['navigateTo'] || '/dashboard';
+    effect(() => {
+      const user = this.auth.user();
+      if (user) {
+        this.router.navigate([this.navigateTo]);
+      }
+    });
   }
 
-  async onSubmit(){
-    console.log(this.formLogin.value);
-    try{
-      this.error.set(false);
-      const response = await this.auth.login(this.formLogin.value as any);
-      this.router.navigate([this.navigateTo]);
-    }
-    catch(error){
-      this.error.set(true);
-    }
-    
+  onSubmit(){
+    this.auth.login(this.formLogin.value as any);
   }
 
   getError(control:string){

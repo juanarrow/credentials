@@ -1,0 +1,28 @@
+## Análisis de LTV para Base Fija por Línea de Producto
+
+| Línea de Producto | Clientes | LTV Promedio | LTV Total |
+|-------------------|----------|--------------|----------|
+| **Fibra 600MB** | 199 | €895.81 | €178,265.76 |
+| **Fibra 1GB** | 182 | €864.80 | €157,392.94 |
+| **Fibra 100MB** | 168 | €833.06 | €139,954.31 |
+| **Fijo Básico** | 194 | €821.27 | €159,325.91 |
+| **Fibra 300MB** | 182 | €818.14 | €148,901.82 |
+
+### Insights Clave:
+
+**🏆 Mejor LTV por Cliente:** Fibra 600MB lidera con €895.81 de LTV promedio
+
+**📊 Distribución de Base:**
+- Total de clientes fijos: **925 clientes**
+- LTV total de la base: **€783,840.39**
+- LTV promedio general: **€847.85**
+
+**💡 Análisis Estratégico:**
+
+1. **Segmento Premium Rentable**: Los planes de fibra de alta velocidad (600MB y 1GB) generan el mayor valor por cliente
+
+2. **Oportunidad de Upselling**: Los clientes de Fijo Básico (194 clientes) representan una oportunidad significativa para migrar a fibra
+
+3. **Paradoja de Velocidad**: Curiosamente, Fibra 300MB tiene menor LTV que 100MB, sugiriendo diferencias en duración de contratos o tarifas
+
+4. **Base Sólida**: La distribución equilibrada de clientes entre productos indica una cartera diversificada y estable

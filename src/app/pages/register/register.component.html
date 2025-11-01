@@ -237,17 +237,13 @@
       >
         Registrar
       </button>
-      <span>
-        <p>¿Tienes cuenta?</p>
+      <div class="mb-4 text-center">
+        <p class="text-white text-sm mb-2">¿Tienes cuenta?</p>
         <a [routerLink]="['/login']" [state]="{ navigateTo: navigateTo }"
-          >Inicia sesión</a
-        >
-      </span>
-      @if(error()){
-      <span class="text-red-500 font-medium text-sm">
-        <p>Email o contraseña invalidos</p>
-      </span>
-      }
+           class="text-blue-300 hover:text-blue-100 font-medium underline transition-colors">
+          Inicia sesión
+        </a>
+      </div>
     </form>
   </div>
 </div>
