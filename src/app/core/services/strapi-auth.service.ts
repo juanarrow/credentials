@@ -57,13 +57,14 @@ export interface StrapiUser {
 @Injectable({
   providedIn: 'root'
 })
-export class StrapiAuthService {
+export class StrapiAuthService{
   
   /**
    * Señal que contiene el usuario autenticado actual.
    * null si no hay usuario autenticado.
    */
-  public user: any | null;
+  private currentUser = signal<any>(null);
+  public user = this.currentUser.asReadonly();
   
   /**
    * Token JWT almacenado en localStorage.
@@ -83,7 +84,7 @@ export class StrapiAuthService {
    * 3. Intenta obtener los datos del usuario autenticado (me())
    */
   constructor() {
-    this.user = signal<any>(null);
+
     this.token = localStorage.getItem('token');
     this.me();
   }
@@ -132,7 +133,7 @@ export class StrapiAuthService {
    * @param user - Datos del usuario a establecer
    */
   setUser(user:User){
-    this.user.set(user);
+    this.currentUser.set(user);
   }
 
   /**
@@ -191,7 +192,7 @@ export class StrapiAuthService {
    * y redirigen al login si es necesario (mediante guards).
    */
   logout() {
-    this.user.set(null);
+    this.currentUser.set(null);
     localStorage.removeItem('token');
     this.token = null;
   }
