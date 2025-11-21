@@ -1,0 +1,50 @@
+{
+  "LOGIN": {
+    "TITLE": "Iniciar sesión",
+    "SUBTITLE": "Accede con tus credenciales",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "tu@email",
+    "PASSWORD": "Contraseña",
+    "PASSWORD_PLACEHOLDER": "tu contraseña",
+    "SUBMIT": "Acceder",
+    "NO_ACCOUNT": "¿No tienes cuenta?",
+    "REGISTER_LINK": "Regístrate",
+    "ERRORS": {
+      "EMAIL_REQUIRED": "El campo email es requerido",
+      "EMAIL_INVALID": "El email no es correcto",
+      "PASSWORD_REQUIRED": "El campo contraseña es requerido"
+    }
+  },
+  "REGISTER": {
+    "TITLE": "Regístrate",
+    "SUBTITLE": "Introduce los datos para registrarte",
+    "NAME": "Nombre",
+    "NAME_PLACEHOLDER": "tu nombre",
+    "SURNAME": "Apellidos",
+    "SURNAME_PLACEHOLDER": "tus apellidos",
+    "EMAIL": "Email",
+    "EMAIL_PLACEHOLDER": "tu@email",
+    "PASSWORD": "Contraseña",
+    "PASSWORD_PLACEHOLDER": "tu contraseña",
+    "CONFIRM_PASSWORD": "Repite contraseña",
+    "SUBMIT": "Registrar",
+    "HAVE_ACCOUNT": "¿Tienes cuenta?",
+    "LOGIN_LINK": "Inicia sesión",
+    "ERRORS": {
+      "NAME_REQUIRED": "El campo nombre es requerido",
+      "NAME_MIN_LENGTH": "Debe introducir al menos 3 caracteres",
+      "SURNAME_REQUIRED": "El campo apellidos es requerido",
+      "EMAIL_REQUIRED": "El campo email es requerido",
+      "EMAIL_INVALID": "El email no es correcto",
+      "PASSWORD_REQUIRED": "El campo contraseña es requerido",
+      "PASSWORD_PATTERN": "Al menos una mayúscula, una minúscula, un número y 8 caracteres",
+      "PASSWORDS_NO_MATCH": "Las contraseñas no coinciden"
+    }
+  },
+  "COMMON": {
+    "LANGUAGE": "Idioma",
+    "SPANISH": "Español",
+    "ENGLISH": "English"
+  }
+}
+

@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal, effect, untracked } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LocalStorageAuthService } from '../../core/services/local-storate-auth.service';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { StrapiAuthService } from '../../core/services/strapi-auth.service';
 import { User } from '../../core/models/user';
+import { LanguageSelectorComponent } from '../../shared/components/language-selector/language-selector.component';
+import { TranslationService } from '../../core/services/translation.service';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, TranslateModule, LanguageSelectorComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -16,8 +18,9 @@ export class LoginComponent {
 
   formLogin;
   private router:Router = inject(Router);
+  private translationService = inject(TranslationService);
   readonly navigateTo:string;
-
+  
   constructor(private formSvc:FormBuilder,
     private auth:StrapiAuthService
   ){
@@ -44,16 +47,16 @@ export class LoginComponent {
       case 'email':
         if(this.formLogin.controls.email.errors!=null && 
            Object.keys(this.formLogin.controls.email.errors).includes('required'))
-           return "El campo email es requerido";
+           return this.translationService.instant('LOGIN.ERRORS.EMAIL_REQUIRED');
         else if(this.formLogin.controls.email.errors!=null && 
            Object.keys(this.formLogin.controls.email.errors).includes('email'))
-           return "El email no es correcto";
+           return this.translationService.instant('LOGIN.ERRORS.EMAIL_INVALID');
         
         break;
       case 'password': 
         if(this.formLogin.controls.password.errors!=null && 
            Object.keys(this.formLogin.controls.password.errors).includes('required'))
-           return "El campo email es requerido";
+           return this.translationService.instant('LOGIN.ERRORS.PASSWORD_REQUIRED');
         break;
       default:return "";
     }
