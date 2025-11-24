@@ -1,0 +1,82 @@
+<div class="min-h-screen bg-gray-50 py-8 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8">
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+        Componente File Upload
+      </h1>
+      <p class="text-gray-600 mb-8">
+        Prueba el componente de carga de archivos con diferentes configuraciones
+      </p>
+      
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-8">
+        
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-3">
+            1. Avatar (Solo imágenes, requerido) *
+          </label>
+          <app-file-upload 
+            formControlName="avatar"
+            [acceptedMimeTypes]="['image/png', 'image/jpeg', 'image/jpg', 'image/webp']"
+            [maxSizeInMB]="2"
+            placeholder="Arrastra tu avatar aquí o haz clic (máx 2MB)">
+          </app-file-upload>
+          @if (form.controls.avatar.touched && form.controls.avatar.errors?.['required']) {
+            <p class="text-red-500 text-sm mt-2">⚠️ El avatar es requerido</p>
+          }
+        </div>
+        
+        <div class="border-t pt-8">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">
+            2. Documento de identidad (Imágenes o PDF, opcional)
+          </label>
+          <app-file-upload 
+            formControlName="documento"
+            [acceptedMimeTypes]="['image/*', 'application/pdf']"
+            [maxSizeInMB]="5"
+            placeholder="DNI, Pasaporte o documento oficial">
+          </app-file-upload>
+        </div>
+        
+        <div class="border-t pt-8">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">
+            3. CV (Solo PDF, opcional)
+          </label>
+          <app-file-upload 
+            
+            formControlName="cv"
+            [acceptedMimeTypes]="['application/pdf']"
+            [maxSizeInMB]="10"
+            placeholder="Sube tu currículum vitae en PDF">
+          </app-file-upload>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t">
+          <button
+            type="submit"
+            [disabled]="form.invalid"
+            class="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            Enviar Formulario
+          </button>
+          
+          <button
+            type="button"
+            (click)="reset()"
+            class="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-lg transition-colors">
+            Limpiar Todo
+          </button>
+        </div>
+        
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <p class="text-sm text-blue-800">
+            <strong>Estado del formulario:</strong> 
+            <span class="ml-2" [class.text-green-600]="form.valid" [class.text-red-600]="form.invalid">
+              {{ form.valid ? '✓ Válido' : '✗ Inválido (falta avatar)' }}
+            </span>
+          </p>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+</div>
+

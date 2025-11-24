@@ -13,6 +13,7 @@ import { TranslationService } from './core/services/translation.service';
 export class AppComponent {
   title = 'credentials';
   
+  
   private translationService = inject(TranslationService);
 
   constructor(){
